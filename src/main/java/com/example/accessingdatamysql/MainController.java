@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,4 +35,24 @@ public class MainController {
 		// This returns a JSON or XML with the users
 		return userRepository.findAll();
 	}
+
+	@PutMapping("/user")
+	public @ResponseBody String UpdateUser(@RequestParam Integer id, @RequestParam 
+		String name, @RequestParam String email) {
+		User n = new User();
+		n.setId(id);
+		n.setName(name);
+		n.setEmail(email);
+		userRepository.save(n);
+		return "Updated";
+	}
+
+	@DeleteMapping(path="/user")
+	public @ResponseBody String deleteUser(@RequestParam Integer id) {
+		User n = new User();
+		n.setId(id);
+		userRepository.delete(n);
+		return "Deleted";
+	}
+
 }
